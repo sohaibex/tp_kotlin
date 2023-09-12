@@ -15,15 +15,14 @@ import androidx.compose.ui.unit.dp
 import com.example.td1_kotlin_project.ui.theme.TD1_kotlin_projectTheme
 
 class MainActivity : ComponentActivity() {
+
     @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
-    @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             TD1_kotlin_projectTheme {
-
                 Scaffold(
-                    topBar = { MainTopBar() }
+                    topBar = { MainTopBar(text = "Android Cloud 2023") }
                 ) {
                     Column(
                         modifier = Modifier
@@ -45,6 +44,7 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
+
 
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {

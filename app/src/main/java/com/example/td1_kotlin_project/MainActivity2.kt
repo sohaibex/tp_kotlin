@@ -32,7 +32,12 @@ class MainActivity2 : ComponentActivity() {
 @Composable
 fun AppContent() {
     TD1_kotlin_projectTheme {
-        Scaffold(topBar = { MainTopBar() }) { contentPadding ->
+        Scaffold(topBar = {
+            MainTopBar(
+                text = "Android Cloud 2023",
+                showBackButton = true
+            )
+        }) { contentPadding ->
             MainColumn(contentPadding = contentPadding)
         }
     }
