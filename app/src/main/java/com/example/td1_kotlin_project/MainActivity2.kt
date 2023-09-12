@@ -21,48 +21,41 @@ import com.example.td1_kotlin_project.ui.theme.TD1_kotlin_projectTheme
 data class Item(val category: String, val ratings: List<String>)
 
 class MainActivity2 : ComponentActivity() {
-    @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
-    @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            TD1_kotlin_projectTheme {
-                Scaffold(
-                    topBar = {
-                        TopAppBar(
-                            title = {
-                                Text("Android Cloud 2023")
-                            },
-                        )
-                    }
-                ) {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(16.dp)
-                    ) {
-                        ImageFromUrl(url = "https://i.ytimg.com/vi/KEkrWRHCDQU/maxresdefault.jpg")
-                        Spacer(modifier = Modifier.height(16.dp))
-                        val items = listOf(
-                            Item("Honey Comb", listOf("3.0", "3.1", "3.2")),
-                            Item("Ice Cream Sandwich", listOf("4.0", "4.1")),
-                            Item("Jelly Bean", listOf("5.0")),
-                            Item("Kitkat", listOf("6.0", "6.1"))
-                        ).groupBy { it.category }
-                        ItemsListWithHeaders(items)
-                    }
-                }
-            }
+            AppContent()
         }
     }
 }
 
 @Composable
-fun ImageFromUrl(url: String) {
+fun AppContent() {
+    TD1_kotlin_projectTheme {
+        Scaffold(topBar = { MainTopBar() }) { contentPadding ->
+            MainColumn(contentPadding = contentPadding)
+        }
+    }
+}
+
+@Composable
+fun MainColumn(contentPadding: PaddingValues) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(contentPadding)
+            .padding(16.dp)
+    ) {
+        DisplayImage(url = "https://i.ytimg.com/vi/KEkrWRHCDQU/maxresdefault.jpg")
+        Spacer(modifier = Modifier.height(16.dp))
+        DisplayItems()
+    }
+}
+
+@Composable
+fun DisplayImage(url: String) {
     val painter = rememberAsyncImagePainter(
-        ImageRequest.Builder(LocalContext.current)
-            .data(url)
-            .build()
+        ImageRequest.Builder(LocalContext.current).data(url).build()
     )
     Image(
         painter = painter,
@@ -73,44 +66,56 @@ fun ImageFromUrl(url: String) {
     )
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun DisplayItems() {
+    val items = listOf(
+        Item("HoneyComb", listOf("3.0", "3.1", "3.2")),
+        Item("Ice Cream Sandwich", listOf("4.0", "4.1")),
+        Item("Jelly Bean", listOf("5.0")),
+        Item("Kitkat", listOf("6.0", "6.1"))
+    ).groupBy { it.category }
+    ItemsListWithHeaders(items)
+}
+
 @Composable
 fun ItemsListWithHeaders(items: Map<String, List<Item>>) {
     LazyColumn {
         items.forEach { (category, itemList) ->
-            item {
-                SuggestionChip(
-                    colors = SuggestionChipDefaults.suggestionChipColors(
-                        containerColor = MaterialTheme.colorScheme.errorContainer,
-                        labelColor = MaterialTheme.colorScheme.onErrorContainer
-                    ),
-                    label = { Text(category) },
-                    onClick = {},
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(8.dp)
-                )
-            }
+            item { CategoryChip(category) }
 
             itemList.forEach { item ->
                 items(item.ratings) { rating ->
-                    Box(
-                        modifier = Modifier.fillMaxWidth(),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        SuggestionChip(
-                            colors = SuggestionChipDefaults.suggestionChipColors(
-                                containerColor = MaterialTheme.colorScheme.onTertiaryContainer,
-                                labelColor = MaterialTheme.colorScheme.errorContainer
-                            ),
-                            label = { Text(rating) },
-                            onClick = {}
-                        )
-                    }
+                    RatingChip(rating)
                 }
             }
         }
     }
+}
+
+@Composable
+fun CategoryChip(category: String) {
+    SuggestionChip(
+        colors = SuggestionChipDefaults.suggestionChipColors(
+            containerColor = MaterialTheme.colorScheme.errorContainer,
+            labelColor = MaterialTheme.colorScheme.onErrorContainer
+        ),
+        label = { Text(category) },
+        onClick = {},
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(8.dp)
+    )
+}
 
 
+@Composable
+fun RatingChip(rating: String) {
+    Box(
+        modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center
+    ) {
+        SuggestionChip(colors = SuggestionChipDefaults.suggestionChipColors(
+            containerColor = MaterialTheme.colorScheme.onTertiaryContainer,
+            labelColor = MaterialTheme.colorScheme.errorContainer
+        ), label = { Text(rating) }, onClick = {})
+    }
 }

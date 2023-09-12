@@ -23,7 +23,7 @@ class MainActivity : ComponentActivity() {
             TD1_kotlin_projectTheme {
 
                 Scaffold(
-                    topBar = { TopAppBar(title = { Text("Android Cloud 2023") }) }
+                    topBar = { MainTopBar() }
                 ) {
                     Column(
                         modifier = Modifier

@@ -5,12 +5,16 @@ plugins {
 
 android {
     namespace = "com.example.td1_kotlin_project"
-    compileSdk = 33
+    compileSdk = 34
+
+    kotlinOptions {
+        freeCompilerArgs += "-Xopt-in=androidx.compose.material3.ExperimentalMaterial3Api"
+    }
 
     defaultConfig {
         applicationId = "com.example.td1_kotlin_project"
         minSdk = 24
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
