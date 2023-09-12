@@ -1,28 +1,45 @@
 package com.example.td1_kotlin_project
 
+import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.example.td1_kotlin_project.ui.theme.TD1_kotlin_projectTheme
 
 class MainActivity : ComponentActivity() {
+    @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+    @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             TD1_kotlin_projectTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
+
+                Scaffold(
+                    topBar = { TopAppBar(title = { Text("Android Cloud 2023") }) }
                 ) {
-                    Greeting("Android")
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(16.dp),
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Greeting("My name is EL MEDIOUNI Sohaib")
+                        Spacer(modifier = Modifier.height(16.dp))
+                        Button(onClick = {
+                            startActivity(Intent(this@MainActivity, MainActivity2::class.java))
+                        }) {
+                            Text(text = "Navigate to the fruits ratings")
+                        }
+                    }
                 }
             }
         }
