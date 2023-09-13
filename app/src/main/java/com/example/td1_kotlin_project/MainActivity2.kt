@@ -14,6 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.navigation.compose.rememberNavController
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.example.td1_kotlin_project.ui.theme.TD1_kotlin_projectTheme
@@ -42,6 +43,8 @@ fun AppContent() {
         }
     }
 }
+
+
 
 @Composable
 fun MainColumn(contentPadding: PaddingValues) {

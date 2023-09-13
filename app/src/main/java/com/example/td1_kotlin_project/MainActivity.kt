@@ -1,5 +1,6 @@
 package com.example.td1_kotlin_project
 
+import HomeNavHost
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
@@ -12,6 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.compose.rememberNavController
 import com.example.td1_kotlin_project.ui.theme.TD1_kotlin_projectTheme
 
 class MainActivity : ComponentActivity() {
@@ -21,6 +23,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             TD1_kotlin_projectTheme {
+                val navController = rememberNavController()
                 Scaffold(
                     topBar = { MainTopBar(text = "Android Cloud 2023") }
                 ) {
@@ -32,12 +35,20 @@ class MainActivity : ComponentActivity() {
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         Greeting("My name is EL MEDIOUNI Sohaib")
-                        Spacer(modifier = Modifier.height(16.dp))
-                        Button(onClick = {
-                            startActivity(Intent(this@MainActivity, MainActivity2::class.java))
-                        }) {
-                            Text(text = "Navigate to the fruits ratings")
+                        Spacer(modifier = Modifier.height(30.dp))
+                        Box(
+                            modifier = Modifier
+                                .fillMaxSize()
+                        ) {
+                            HomeNavHost(
+                                navController = navController
+                            )
                         }
+//                        Button(onClick = {
+//                            startActivity(Intent(this@MainActivity, MainActivity2::class.java))
+//                        }) {
+//                            Text(text = "Navigate to the fruits ratings")
+//                        }
                     }
                 }
             }
@@ -45,6 +56,16 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+@Composable
+fun MainScreen(
+    onButtonClick: () -> Unit,
+) {
+    Column {
+        Text("sohaib")
+        Button(content = { Text("go to list screen") }, onClick = { onButtonClick() })
+
+    }
+}
 
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
